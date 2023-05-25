@@ -5,6 +5,7 @@ import edu.rafael.credit.application.system.dto.CustomerUpdateDto
 import edu.rafael.credit.application.system.dto.CustomerView
 import edu.rafael.credit.application.system.entity.Customer
 import edu.rafael.credit.application.system.service.impl.CustomerService
+import jakarta.validation.Valid
 import org.apache.coyote.Response
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -16,7 +17,7 @@ class CustomerController(
     private val customerService: CustomerService
 ) {
     @PostMapping
-    fun saveCustomer(@RequestBody customerDto: CustomerDto): ResponseEntity<String> {
+    fun saveCustomer(@RequestBody @Valid customerDto: CustomerDto): ResponseEntity<String> {
         val savedCustomer = this.customerService.save(customerDto.toEntity())
         return ResponseEntity.status(HttpStatus.CREATED).body("Customer  ${savedCustomer.email} saved!")
     }
@@ -28,13 +29,14 @@ class CustomerController(
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteById(@PathVariable id: Long) {
         this.customerService.delete(id)
     }
 
     @PatchMapping
     fun updateCustomer(@RequestParam(value = "customerId") customerId: Long,
-                       @RequestBody customerUpdateDto: CustomerUpdateDto): ResponseEntity<CustomerView> {
+                       @RequestBody @Valid customerUpdateDto: CustomerUpdateDto): ResponseEntity<CustomerView> {
         val customer: Customer = this.customerService.findById(customerId)
         val toUpdateCustomer: Customer = customerUpdateDto.toEntity(customer)
         val updatedCustomer: Customer = this.customerService.save(toUpdateCustomer)
