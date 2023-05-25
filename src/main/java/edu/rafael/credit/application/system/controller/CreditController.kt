@@ -22,7 +22,7 @@ class CreditController (
         return ResponseEntity.status(HttpStatus.CREATED).body("Credit ${credit.creditCode} - Customer ${credit.customer?.firstName} saved!")
     }
 
-    @GetMapping("/{id}")
+    @GetMapping
     fun findAllByCustomerId(@RequestParam(value = "customerId") customerId: Long) : ResponseEntity<List<CreditViewList>> {
         val creditViewList: List<CreditViewList> = this.creditService.findAllByCustomer(customerId).stream()
             .map {
