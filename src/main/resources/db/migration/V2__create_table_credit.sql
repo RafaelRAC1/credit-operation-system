@@ -11,4 +11,4 @@ CREATE TABLE credit (
 
 ALTER TABLE credit ADD CONSTRAINT uc_credit_creditcode UNIQUE (credit_code);
 
-ALTER TABLE credit ADD CONSTRAINT FK_CREDIT_ON_CUSTOMER FOREIGN KEY (customer_id) REFERENCES client (id);
+ALTER TABLE credit ADD CONSTRAINT FK_CREDIT_ON_CUSTOMER FOREIGN KEY (customer_id) REFERENCES customer (id);
