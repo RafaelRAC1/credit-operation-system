@@ -32,10 +32,10 @@ class CustomerController(
         this.customerService.delete(id)
     }
 
-    @PatchMapping("/{id}")
-    fun updateCustomer(@RequestParam(value = "customerId") id: Long,
+    @PatchMapping
+    fun updateCustomer(@RequestParam(value = "customerId") customerId: Long,
                        @RequestBody customerUpdateDto: CustomerUpdateDto): ResponseEntity<CustomerView> {
-        val customer: Customer = this.customerService.findById(id)
+        val customer: Customer = this.customerService.findById(customerId)
         val toUpdateCustomer: Customer = customerUpdateDto.toEntity(customer)
         val updatedCustomer: Customer = this.customerService.save(toUpdateCustomer)
         return ResponseEntity.status(HttpStatus.OK).body(CustomerView(updatedCustomer))
