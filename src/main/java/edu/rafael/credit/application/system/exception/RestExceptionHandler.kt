@@ -47,7 +47,7 @@ class RestExceptionHandler {
 
     @ExceptionHandler(BusinessException::class)
     fun handlerValidException(ex: BusinessException): ResponseEntity<ExceptionDetails> {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
             ExceptionDetails(
                 title = "Bad Request! Consult the documentation",
                 timeStamp = LocalDateTime.now(),
